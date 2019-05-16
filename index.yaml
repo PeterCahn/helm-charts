@@ -3,11 +3,11 @@ entries:
   my-app:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-16T17:40:12.036406312+02:00"
+    created: "2019-05-16T17:53:32.532799575+02:00"
     description: A Helm chart for Kubernetes
-    digest: a87bbfeed4b6e57f5d06adb97f38a5c3ecc40108e8d6f4e2097f60c91daac425
+    digest: 713a5a754c5a3dabb54c23f4e455e1d7a6d9fa7d2be8778f756626c295644514
     name: my-app
     urls:
-    - https://petercahn.github.io/helm-charts/index.yaml/my-app-0.1.0.tgz
+    - https://petercahn.github.io/helm-charts/my-app/my-app-0.1.0.tgz
     version: 0.1.0
-generated: "2019-05-16T17:40:12.035506808+02:00"
+generated: "2019-05-16T17:53:32.530860874+02:00"
