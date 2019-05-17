@@ -28,20 +28,10 @@ spec:
             - name: http
               containerPort: 8088
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8088          
-            initialDelaySeconds: 60
-            timeoutSeconds: 10
-            periodSeconds: 10
           readinessProbe:
-            httpGet:
-              path: /health
-              port: 8088
-            initialDelaySeconds: 60
-            timeoutSeconds: 10
-            periodSeconds: 10
+            {{- toYaml .Values.readinessProbe | indent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | indent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
