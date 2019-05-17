@@ -28,18 +28,6 @@ spec:
             - name: http
               containerPort: 8088
               protocol: TCP
-          {{- if .Values.livenessProbe }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          {{- end }}
-          {{- if .Values.readinessProbe }}
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
