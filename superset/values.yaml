@@ -45,19 +45,20 @@ resources:
      memory: 250Mi
 
 livenessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6
   successThreshold: 1
+
 readinessProbe:
-  enabled: true
-  initialDelaySeconds: 5
+  enabled: false
+  initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6
-successThreshold: 1
+  successThreshold: 1
 
 nodeSelector: {}
 
