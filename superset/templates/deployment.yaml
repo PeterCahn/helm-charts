@@ -28,15 +28,6 @@ spec:
             - name: http
               containerPort: 8088
               protocol: TCP
-
-          {{- with .Values.readinessProbe }}
-          readinessProbe:
-            {{- toYaml .  | nindent 12 }}
-          {{- end}}
-          {{- with .Values.livenessProbe }}
-          livenessProbe:
-            {{- toYaml .  | nindent 12 }}
-          {{- end}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
