@@ -3,7 +3,7 @@ entries:
   my-app:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-17T18:10:17.512101488+02:00"
+    created: "2019-05-17T17:44:42.014469892+02:00"
     description: A Helm chart for Kubernetes
     digest: 89b4eee80721602061d7b0c0e63d18d83139f395654c45278899eacb02159889
     name: my-app
@@ -13,11 +13,11 @@ entries:
   superset:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-17T18:10:17.515351946+02:00"
+    created: "2019-05-17T17:44:42.016553431+02:00"
     description: A Helm chart for Kubernetes
-    digest: 0efc7fffee5949ea9b2f0df747a0a5a3a5aa8be4035596b487f543410524abc5
+    digest: a3702df6b69ca628d468ec1b170b8e60ce9eee983c47a2b0ea04459906ad2322
     name: superset
     urls:
     - https://petercahn.github.io/helm-charts/superset/superset-0.1.0.tgz
     version: 0.1.0
-generated: "2019-05-17T18:10:17.510230974+02:00"
+generated: "2019-05-17T17:44:42.013184585+02:00"

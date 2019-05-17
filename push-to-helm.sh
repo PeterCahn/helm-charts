@@ -12,11 +12,13 @@ git push
 
 helm repo update
 
-differences=$(diff <(curl https://petercahn.github.io/helm-charts/index.yaml) index.yaml)
+
+curl https://petercahn.github.io/helm-charts/index.yaml > curl.tmp
+differences=$(diff curl.tmp index.yaml)
 if [ -z "$differences" ] ; then
 	echo "File index.yaml is synced"
 else
 	echo "File index.yaml is not in sync"
 	echo $differences
 fi
-
+rm -f curl.tmp
