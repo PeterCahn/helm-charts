@@ -8,7 +8,7 @@ helm repo index . --url https://petercahn.github.io/helm-charts/
 
 
 git add --all
-git commit -a -m "change index"
+git commit -a -m "$2"
 git push
 
 helm repo update
