@@ -12,6 +12,8 @@ git add --all
 git commit -a -m "change index"
 git push
 
+helm repo update
+
 curl https://petercahn.github.io/helm-charts/index.yaml
 
 
