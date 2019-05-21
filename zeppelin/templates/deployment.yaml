@@ -52,29 +52,35 @@ spec:
           volumeMounts:
             - mountPath: /etc/security/freeipa-backups
               name: freeipa-backups
-            - mountPath: /etc/security/keytabs
-              name: keytabs
             - mountPath: /opt/zeppelin/notebook
               name: notebooks
             - mountPath: /opt/zeppelin/interpreters
               name: interpreters
+            - mountPath: /etc/security/keytabs
+              name: keytabs
+            - mountPath: /opt/zeppelin/logs
+              name: logs
       volumes:
       - hostPath:
           path: /local_volumes/zeppelin/freeipa-backups
-          type: Directory
+          type: DirectoryOrCreate
         name: freeipa-backups
       - hostPath:
-          path: /local_volumes/zeppelin/freeipa-backups/keytabs
-          type: Directory
-        name: keytabs
-      - hostPath:
-          path: /local_volumes/zeppelin/zeppelin-backup/notebook
-          type: Directory
+          path: /local_volumes/zeppelin/zeppelin-backups/notebook
+          type: DirectoryOrCreate
         name: notebooks
       - hostPath:
-          path: /local_volumes/zeppelin/zeppelin-backup/interpreters
-          type: Directory
+          path: /local_volumes/zeppelin/zeppelin-backups/interpreters
+          type: DirectoryOrCreate
         name: interpreters
+      - hostPath:
+          path: /local_volumes/zeppelin/keytabs
+          type: DirectoryOrCreate
+        name: keytabs
+      - hostPath:
+          path: /local_volumes/zeppelin/logs
+          type: DirectoryOrCreate
+        name: logs
       terminationGracePeriodSeconds: 30
       {{- with .Values.nodeSelector }}
       nodeSelector:
