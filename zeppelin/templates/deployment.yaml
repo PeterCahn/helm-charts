@@ -26,11 +26,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           env:
             - name: ANONYMOUS_DENIED
-              value: true
+              value: "true"
             - name: IPASERVER
               value: {{ .Values.env.ipaserver | quote }}
             - name: FREEIPA_ADMIN_PASSWORD
@@ -47,6 +47,8 @@ spec:
             - name: ZEPPELIN_ADMIN_PASSWORD
               value: {{ .Values.env.zeppelinAdminPassword | quote }}
             {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/security/freeipa-backups
               name: freeipa-backups
@@ -56,25 +58,23 @@ spec:
               name: notebooks
             - mountPath: /opt/zeppelin/interpreters
               name: interpreters
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        - hostPath:
-            path: /local_volumes/zeppelin/freeipa-backups
-            type: Directory
-           name: freeipa-backups
-        - hostPath:
-            path: /local_volumes/zeppelin/keytabs
-            type: Directory
-          name: keytabs
-        - hostPath:
-            path: /local_volumes/zeppelin/zeppelin-backup/notebook
-            type: Directory
-          name: notebook
-        - hostPath:
-            path: /local_volumes/zeppelin/zeppelin-backup/interpreters
-            type: Directory
-          name: interpreters
+      - hostPath:
+          path: /local_volumes/zeppelin/freeipa-backups
+          type: Directory
+        name: freeipa-backups
+      - hostPath:
+          path: /local_volumes/zeppelin/keytabs
+          type: Directory
+        name: keytabs
+      - hostPath:
+          path: /local_volumes/zeppelin/zeppelin-backup/notebook
+          type: Directory
+        name: notebooks
+      - hostPath:
+          path: /local_volumes/zeppelin/zeppelin-backup/interpreters
+          type: Directory
+        name: interpreters
       terminationGracePeriodSeconds: 30
       {{- with .Values.nodeSelector }}
       nodeSelector:

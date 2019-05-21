@@ -3,7 +3,7 @@ entries:
   my-app:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-21T10:50:19.476712927+02:00"
+    created: "2019-05-21T12:18:39.448280412+02:00"
     description: A Helm chart for Kubernetes
     digest: 89b4eee80721602061d7b0c0e63d18d83139f395654c45278899eacb02159889
     name: my-app
@@ -13,7 +13,7 @@ entries:
   superset:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-21T10:50:19.478865204+02:00"
+    created: "2019-05-21T12:18:39.45253897+02:00"
     description: A Helm chart for Kubernetes
     digest: 79d87afe2f27683b5a0d372d6a296cf7721b2765073d03a2cc9ca4346ee42fe4
     name: superset
@@ -23,11 +23,11 @@ entries:
   zeppelin:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-21T10:50:19.479289203+02:00"
+    created: "2019-05-21T12:18:39.453285034+02:00"
     description: A Helm chart for Kubernetes
-    digest: 8ec92bc87c6e177053b839b3564a64a1c77912eabcde5b6c5e02cae05b494fd1
+    digest: 5c3454324b1d519756c751c7906d9d6fcd7340e04cf85f7633dcecde7056fde7
     name: zeppelin
     urls:
     - https://petercahn.github.io/helm-charts/zeppelin/zeppelin-0.1.0.tgz
     version: 0.1.0
-generated: "2019-05-21T10:50:19.475585485+02:00"
+generated: "2019-05-21T12:18:39.447100996+02:00"
