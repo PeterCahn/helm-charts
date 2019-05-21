@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "zeppelin.fullname" . }}
+  labels:
+{{ include "zeppelin.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "zeppelin.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "zeppelin.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: ANONYMOUS_DENIED
+              value: true
+            - name: IPASERVER
+              value: {{ .Values.env.ipaserver | quote }}
+            - name: FREEIPA_ADMIN_PASSWORD
+              value: {{ .Values.env.freeipaAdminPassword | quote }}
+            - name: PROJECT
+              value: {{ .Values.env.project | quote }}
+            - name: PROXY
+              value: {{ .Values.env.proxy | quote }}
+            {{- if .Values.env.zeppelinAdminUser }}
+            - name: ZEPPELIN_ADMIN_USER
+              value: {{ .Values.env.zeppelinAdminUser | quote }} 
+            {{- end }}
+            {{- if .Values.env.zeppelinAdminUser }}
+            - name: ZEPPELIN_ADMIN_PASSWORD
+              value: {{ .Values.env.zeppelinAdminPassword | quote }}
+            {{- end }}
+          volumeMounts:
+            - mountPath: /etc/security/freeipa-backups
+              name: freeipa-backups
+            - mountPath: /etc/security/keytabs
+              name: keytabs
+            - mountPath: /opt/zeppelin/notebook
+              name: notebooks
+            - mountPath: /opt/zeppelin/interpreters
+              name: interpreters
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - hostPath:
+            path: /local_volumes/zeppelin/freeipa-backups
+            type: Directory
+           name: freeipa-backups
+        - hostPath:
+            path: /local_volumes/zeppelin/keytabs
+            type: Directory
+          name: keytabs
+        - hostPath:
+            path: /local_volumes/zeppelin/zeppelin-backup/notebook
+            type: Directory
+          name: notebook
+        - hostPath:
+            path: /local_volumes/zeppelin/zeppelin-backup/interpreters
+            type: Directory
+          name: interpreters
+      terminationGracePeriodSeconds: 30
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
