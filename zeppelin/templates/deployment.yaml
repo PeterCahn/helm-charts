@@ -64,7 +64,7 @@ spec:
           type: Directory
         name: freeipa-backups
       - hostPath:
-          path: /local_volumes/zeppelin/keytabs
+          path: /local_volumes/zeppelin/freeipa-backups/keytabs
           type: Directory
         name: keytabs
       - hostPath:
