@@ -31,8 +31,6 @@ spec:
           env:
             - name: ZEPPELIN_PORT
               value: {{ .Values.service.port | quote }}
-#            - name: ZEPPELIN_PORT_8080_TCP
-#              value: 
             - name: HOME_ZEPPELIN
               value: "/opt/zeppelin"
             - name: ANONYMOUS_DENIED
