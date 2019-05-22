@@ -3,31 +3,31 @@ entries:
   nginx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-22T18:19:57.08690305+02:00"
+    created: "2019-05-22T18:22:13.694296291+02:00"
     description: A Helm chart for Kubernetes
     digest: 4ee8f9f538464a638c68bfdff9cad495bee8306b72281c86607b4858cea5b998
     name: nginx
     urls:
-    - https://petercahn.github.io/helm-charts/docs/nginx-0.1.0.tgz
+    - nginx-0.1.0.tgz
     version: 0.1.0
   superset:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-22T18:19:57.087609946+02:00"
+    created: "2019-05-22T18:22:13.695201464+02:00"
     description: A Helm chart for Kubernetes
     digest: 4d1ff81fe52391810f90bad7114e4c7259c926415323e52436434e2a005f889b
     name: superset
     urls:
-    - https://petercahn.github.io/helm-charts/docs/superset-0.1.0.tgz
+    - superset-0.1.0.tgz
     version: 0.1.0
   zeppelin:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-05-22T18:19:57.08960883+02:00"
+    created: "2019-05-22T18:22:13.696894162+02:00"
     description: A Helm chart for Kubernetes
     digest: d79f00ada143d22eb7800da956eb8116bdb29a8102fac5df0389e83854f8432b
     name: zeppelin
     urls:
-    - https://petercahn.github.io/helm-charts/docs/zeppelin-0.1.0.tgz
+    - zeppelin-0.1.0.tgz
     version: 0.1.0
-generated: "2019-05-22T18:19:57.085356686+02:00"
+generated: "2019-05-22T18:22:13.692592509+02:00"
