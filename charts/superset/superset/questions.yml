@@ -1,5 +1,4 @@
 categories:
-- Blog
 - CMS
 questions:
 - variable: ingress.enabled
