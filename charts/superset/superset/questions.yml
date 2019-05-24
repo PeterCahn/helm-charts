@@ -14,9 +14,14 @@ questions:
     default: "superset.domain.com"
     description: "Superset Hostname complete"
     type: string
-    label: Superset Hostname
+    label: Hostname
+  - variable: ingress.hosts[0].path
+    default: "{/}"
+    description: "Path where to reach the workload"
+    type: string
+    label: Path
 - variable: ingress.tls[0].hosts
-  default: "superset.domain"
+  default: "{superset.domain}"
   description: "Enable HTTPS"
   type: string
   required: true
