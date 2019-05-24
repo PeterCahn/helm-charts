@@ -11,7 +11,7 @@ questions:
   group: "Ingress Settings"
   subquestions:
   - variable: ingress.hosts[0].host
-    default: "superset.domain"
-    description: "Superset Hostname"
+    default: "superset.domain.com"
+    description: "Superset Hostname complete"
     type: string
     label: Superset Hostname
