@@ -18,6 +18,7 @@ questions:
 - variable: ingress.tls[0].hosts
   default: "superset.domain"
   description: "Enable HTTPS"
+  type: string
   required: true
   label: Enable/Disable HTTPS
   group: "HTTPS Settings"
