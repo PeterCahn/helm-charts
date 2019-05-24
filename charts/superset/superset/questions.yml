@@ -15,3 +15,9 @@ questions:
     description: "Superset Hostname complete"
     type: string
     label: Superset Hostname
+- variable: ingress.tls[0].hosts
+  default: "superset.domain"
+  description: "Enable HTTPS"
+  required: true
+  label: Enable/Disable HTTPS
+  group: "HTTPS Settings"
