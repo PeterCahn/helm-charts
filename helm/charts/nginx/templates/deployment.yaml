@@ -42,10 +42,19 @@ spec:
             - name: config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
+            {{- if .Values.persistence.enabled }}
+            - name: roothtml
+              mountPath: /usr/share/nginx/html
+            {{- end }}
       volumes:
         - name: config
           configMap:
             name: nginx-config
+      {{- if .Values.persistence.enabled }}
+        - name: roothtml
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.name | quote }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

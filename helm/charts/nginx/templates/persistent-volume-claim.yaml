@@ -1,15 +1,14 @@
-{{- if .Values.volume.enabled -}}
+{{- if .Values.persistence.enabled -}}
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
-  name: {{ .Values.volume.name | quote }}
+  name: {{ .Values.persistence.name | quote }}
 spec:
- storageClassName: {{ .Values.volume.storageClassName | quote }}
+ storageClassName: {{ .Values.persistence.storageClassName | quote }}
  accessModes:
-    - {{ .Values.volume.accessMode | quote }}
+    - {{ .Values.persistence.accessMode | quote }}
  resources:
    requests:
-     storage: {{ .Values.volume.capacity | quote }}
-#  selector: 
-#     matchLabels:
-#       pvc : {{ .Values.volume.name | quote }}   
+     storage: {{ .Values.persistence.capacity | quote }}
 {{- end }}
+
