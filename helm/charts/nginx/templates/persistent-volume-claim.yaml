@@ -1,0 +1,15 @@
+{{- if .Values.volume.enabled -}}
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volume.name | quote }}
+spec:
+ storageClassName: {{ .Values.volume.storageClassName | quote }}
+ accessModes:
+    - {{ .Values.volume.accessMode | quote }}
+ resources:
+   requests:
+     storage: {{ .Values.volume.capacity | quote }}
+#  selector: 
+#     matchLabels:
+#       pvc : {{ .Values.volume.name | quote }}   
+{{- end }}
