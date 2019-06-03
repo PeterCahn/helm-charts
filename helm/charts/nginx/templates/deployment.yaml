@@ -28,16 +28,42 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
+            {{- if .Values.persistence.enabled }}
+            - name: roothtml
+              mountPath: /usr/share/nginx/html
+            {{- if .Values.persistence.dataVol }}
+            - name: dataVol
+              mountPath: /tmp/data
+            {{- end }}
+            {{- end }}
       volumes:
         - name: config
           configMap:
             name: nginx-config
+      {{- if .Values.persistence.enabled }}
+        - name: roothtml
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.name | quote }}
+      {{- end }}
+      {{- if .Values.persistence.dataVol }}
+        - name: dataVol
+          persistentVolumeClaim:
+            claimName: nginx-data
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

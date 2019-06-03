@@ -33,11 +33,12 @@ ingress:
   #      - chart-example.local
 
 persistence:
-  name: nginx-vol
   enabled: true
+  name: nginx-root-index
   storageClassName: "gluster5-auth"
   accessMode: "ReadWriteMany"
   capacity: "1Gi"
+  dataVol: false
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
