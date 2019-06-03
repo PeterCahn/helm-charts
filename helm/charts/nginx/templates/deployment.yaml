@@ -46,7 +46,7 @@ spec:
             - name: roothtml
               mountPath: /usr/share/nginx/html
             {{- if .Values.persistence.dataVol }}
-            - name: dataVol
+            - name: datavol
               mountPath: /tmp/data
             {{- end }}
             {{- end }}
@@ -60,7 +60,7 @@ spec:
             claimName: {{ .Values.persistence.name | quote }}
       {{- end }}
       {{- if .Values.persistence.dataVol }}
-        - name: dataVol
+        - name: datavol
           persistentVolumeClaim:
             claimName: nginx-data
       {{- end }}
