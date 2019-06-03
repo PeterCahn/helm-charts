@@ -3,35 +3,17 @@ entries:
   nginx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-06-03T10:16:56.011891516+02:00"
+    created: "2019-06-03T10:20:32.407214404+02:00"
     description: Nginx Helm chart for testing purpose
-    digest: 42c029ed52ea428f6f0b7fa269e48b5467242c4d68989f486f32b922000fd79c
+    digest: 7c44f959ff87a7c1bffa497a0eda92a747b012ce48b1aaf532eefe3881268a14
     name: nginx
     urls:
-    - https://petercahn.github.io/helm-charts/helm/docs/nginx-0.1.2.tgz
-    version: 0.1.2
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: "2019-06-03T10:16:56.011148943+02:00"
-    description: A Helm chart for Kubernetes
-    digest: e83fbb38e281c2b6b341636aaf820190e78090132b1c2d38ef9028649b0b1b87
-    name: nginx
-    urls:
-    - https://petercahn.github.io/helm-charts/helm/docs/nginx-0.1.0.tgz
-    version: 0.1.0
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: "2019-06-03T10:16:56.010096528+02:00"
-    description: A Helm chart for Kubernetes
-    digest: cdc6245e51a3daf3941a311dcaba4a7acba97b645c82499ef74ad949704b13fe
-    name: nginx
-    urls:
-    - https://petercahn.github.io/helm-charts/helm/docs/nginx-0.0.1.tgz
-    version: 0.0.1
+    - https://petercahn.github.io/helm-charts/helm/docs/nginx-0.1.3.tgz
+    version: 0.1.3
   superset:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-06-03T10:16:56.012594638+02:00"
+    created: "2019-06-03T10:20:32.408171589+02:00"
     description: A Helm chart for Kubernetes
     digest: 0e94e5b19bf9568606f16b1039400160e1be21b1c9894b52f8ca8d4294af0efc
     name: superset
@@ -41,11 +23,11 @@ entries:
   zeppelin:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-06-03T10:16:56.01476521+02:00"
+    created: "2019-06-03T10:20:32.411920806+02:00"
     description: A Helm chart for Kubernetes
     digest: 1658097e6046a278acf81c995f42ef65705e5733d00f3c8919cb4857e5852947
     name: zeppelin
     urls:
     - https://petercahn.github.io/helm-charts/helm/docs/zeppelin-0.1.0.tgz
     version: 0.1.0
-generated: "2019-06-03T10:16:56.007707368+02:00"
+generated: "2019-06-03T10:20:32.405264899+02:00"
