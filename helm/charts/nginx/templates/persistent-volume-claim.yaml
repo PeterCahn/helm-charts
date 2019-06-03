@@ -11,4 +11,17 @@ spec:
    requests:
      storage: {{ .Values.persistence.capacity | quote }}
 {{- end }}
-
+---
+{{- if .Values.persistence.dataVol }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: "nginx-data"
+spec:
+ storageClassName: {{ .Values.persistence.storageClassName | quote }}
+ accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+ resources:
+   requests:
+     storage: {{ .Values.persistence.capacity | quote }}
+{{- end }}
