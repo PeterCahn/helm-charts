@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "superset-csi.fullname" . }}
+  labels:
+{{ include "superset-csi.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "superset-csi.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "superset-csi.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            {{- if .Values.env.cacheEnabled }}
+            - name: CACHE_ENABLED
+              value: {{ .Values.env.cacheEnabled | quote }}
+            {{- end }}
+            {{- if .Values.env.supersetUser }}
+            - name: SUPERSETUSER
+              value: {{ .Values.env.supersetUser | quote }}
+            {{- end }}
+            {{- if .Values.env.supersetPassword }}
+            - name: SUPERSETPASSWORD
+              value: {{ .Values.env.supersetPassword | quote }}
+            {{- end }}
+            {{- if .Values.env.supersetEmail }}
+            - name: LOGOUT_REDIRECTURL
+              value: {{ .Values.env.supersetEmail | quote }}
+            {{- end }}
+            {{- if .Values.env.supersetFirstName }}
+            - name: SUPERSETFIRSTNAME
+              value: {{ .Values.env.supersetFirstName | quote }}
+            {{- end }}
+	        {{- if .Values.env.supersetLastName }}
+            - name: SUPERSETLASTNAME
+              value: {{ .Values.env.supersetLastName | quote }}
+            {{- end }}
+            {{- if .Values.env.logoutRedirectUrl }}
+            - name: LOGOUT_REDIRECTURL
+              value: {{ .Values.env.logoutRedirectUrl | quote }}
+            {{- end }}
+            {{- if .Values.env.shibHeaders }}
+            - name: SHIB_HEADERS
+              value: {{ .Values.env.shibHeaders | quote }}
+            {{- end }}
+            {{- if .Values.env.supersetConfigPath }}
+            - name: SUPERSET_CONFIG_PATH
+              value: {{ .Values.env.supersetConfigPath | quote }}
+            {{- end }}
+            {{- if .Values.env.sqlAlchemyMetadataUri }}
+            - name: SQLALCHEMY_METADATA_URI
+              value: {{ .Values.env.sqlAlchemyMetadataUri | quote }}
+            {{- end }}
+            {{- if .Values.env.sqlAlchemyDataUri }}
+            - name: SQLALCHEMY_DATA_URI
+              value: {{ .Values.env.sqlAlchemyDataUri | quote }}
+            {{- end }}
+            {{- if .Values.env.loadExamples }}
+            - name: LOAD_EXAMPLES
+              value: {{ .Values.env.loadExamples | quote }}
+            {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}          
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.persistence.pv.enabled }}
+          volumeMounts:
+            - name: {{ .Values.persistence.pvc.volName }}
+              mountPath: {{ .Values.persistence.pvc.mountPath }}
+              subPath: {{ .Values.persistence.pvc.subPath }}
+            {{- end }}
+      {{- if .Values.persistence.pv.enabled }}
+      volumes:
+        - name: {{ .Values.persistence.pvc.volName | quote }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.pvc.name | quote }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

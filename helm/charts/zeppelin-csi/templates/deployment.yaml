@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "zeppelin-csi.fullname" . }}
+  labels:
+{{ include "zeppelin-csi.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "zeppelin-csi.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "zeppelin-csi.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            {{- if .Values.service.port }}
+            - name: ZEPPELIN_PORT
+              value: {{ .Values.service.port | quote }}
+            {{- end }}
+            - name: HOME_ZEPPELIN
+            {{- if .Values.env.homeZeppelin }}
+              value: {{ .Values.env.homeZeppelin }}
+            {{ else }}
+              value: "/opt/zeppelin"
+            {{- end }}
+            - name: ANONYMOUS_DENIED
+              value: "true"
+            {{- if .Values.env.ipaserver }}
+            - name: IPASERVER
+              value: {{ .Values.env.ipaserver | quote }}
+            {{- end }}
+            {{- if .Values.env.freeipaAdminPassword }}
+            - name: FREEIPA_ADMIN_PASSWORD
+              value: {{ .Values.env.freeipaAdminPassword | quote }}
+            {{- end }}
+            {{- if .Values.env.project }}
+            - name: PROJECT
+              value: {{ .Values.env.project | quote }}
+            {{- end }}
+            {{- if .Values.env.proxy }}
+            - name: PROXY
+              value: {{ .Values.env.proxy | quote }}
+            {{- end }}
+            {{- if .Values.env.zeppelinAdminUser }}
+            - name: ZEPPELIN_ADMIN_USER
+              value: {{ .Values.env.zeppelinAdminUser | quote }} 
+            {{- end }}
+            {{- if .Values.env.zeppelinAdminUser }}
+            - name: ZEPPELIN_ADMIN_PASSWORD
+              value: {{ .Values.env.zeppelinAdminPassword | quote }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.persistence.pv.enabled }}
+          volumeMounts:
+            - mountPath: /etc/security/freeipa-backups
+              name: {{ .Values.persistence.pvc.volName }}
+              subPath: {{ .Values.persistence.pvc.freeipaBackupsSubpath }}
+            - mountPath: /opt/zeppelin/notebook
+              name: {{ .Values.persistence.pvc.volName }}
+              subPath: {{ .Values.persistence.pvc.notebooksSubpath }}
+            - mountPath: /opt/zeppelin/interpreters
+              name: {{ .Values.persistence.pvc.volName }}
+              subPath: {{ .Values.persistence.pvc.interpretersSubpath }}
+            - mountPath: /etc/security/keytabs
+              name: {{ .Values.persistence.pvc.volName }}
+              subPath: {{ .Values.persistence.pvc.keytabsSubpath }}
+            - mountPath: /opt/zeppelin/logs
+              name: {{ .Values.persistence.pvc.volName }}
+              subPath: {{ .Values.persistence.pvc.logsSubpath }}
+          {{- end }}
+      {{- if .Values.persistence.pv.enabled }}
+      volumes:
+      - name: {{ .Values.persistence.pvc.volName }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.pvc.name }}
+      {{- end }}
+      terminationGracePeriodSeconds: 30
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

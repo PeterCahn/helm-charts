@@ -34,27 +34,19 @@ spec:
             - name: config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
-            {{- if .Values.persistence.enabled }}
-            - name: roothtml
-              mountPath: /usr/share/nginx/html
-            {{- if .Values.persistence.dataVol }}
-            - name: datavol
-              mountPath: /tmp/data
-            {{- end }}
+            {{- if .Values.persistence.pv.enabled }}
+            - name: {{ .Values.persistence.pvc.volName }}
+              mountPath: {{ .Values.persistence.pvc.mountPath }}
+              subPath: {{ .Values.persistence.pvc.subPath }}
             {{- end }}
       volumes:
         - name: config
           configMap:
             name: nginx-config
-      {{- if .Values.persistence.enabled }}
+      {{- if .Values.persistence.pv.enabled }}
         - name: roothtml
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.name | quote }}
-      {{- end }}
-      {{- if .Values.persistence.dataVol }}
-        - name: datavol
-          persistentVolumeClaim:
-            claimName: nginx-data
+            claimName: {{ .Values.persistence.pvc.name | quote }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
